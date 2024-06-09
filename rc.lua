@@ -5,7 +5,6 @@ local wibox =        require("wibox")
 local beautiful =    require("beautiful")
 local naughty =      require("naughty")
 local hotkeys =      require("awful.hotkeys_popup")
-local freedesktop =  require("freedesktop")
 
 naughty.config.defaults.timeout = 15
 if awesome.startup_errors then
@@ -22,7 +21,7 @@ awesome.connect_signal("debug::error", function (err)
 end)
 
 local theme = "default/theme.lua"
-local terminal = "x-terminal-emulator"
+local terminal = "kgx"
 local editor = "subl"
 
 awful.spawn("xscreensaver")
@@ -192,13 +191,14 @@ awful.screen.connect_for_each_screen(function(s)
 			spacing = 5,
 			awful.widget.launcher({
 				image = beautiful.awesome_icon,
-				menu = freedesktop.menu.build({before = {{"Awesome", {
-					{"Hotkeys", function() hotkeys_popup.show_help() end},
-					{"Config", editor .. " " .. awesome.conffile},
+				menu = awful.menu({
+					{"Hotkeys", function() hotkeys.show_help() end},
+					{"Awesome", editor .. " " .. awesome.conffile},
+					{"NixOS", editor .. " " .. "/etc/nixos/configuration.nix"},
 					{"Terminal", terminal},
 					{"Restart", awesome.restart},
 					{"Quit", function() awesome.quit() end},
-				}}}})
+				})
 			}),
 			s.mylayoutbox,
 			wibox.widget.textclock("%a, %b %d %I:%M"),
