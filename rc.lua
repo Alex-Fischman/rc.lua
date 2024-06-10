@@ -1,10 +1,10 @@
-local gears =        require("gears")
-local awful =        require("awful")
-                     require("awful.autofocus")
-local wibox =        require("wibox")
-local beautiful =    require("beautiful")
-local naughty =      require("naughty")
-local hotkeys =      require("awful.hotkeys_popup")
+local gears =     require("gears")
+local awful =     require("awful")
+                  require("awful.autofocus")
+local wibox =     require("wibox")
+local beautiful = require("beautiful")
+local naughty =   require("naughty")
+local hotkeys =   require("awful.hotkeys_popup")
 
 naughty.config.defaults.timeout = 15
 if awesome.startup_errors then
@@ -21,8 +21,9 @@ awesome.connect_signal("debug::error", function (err)
 end)
 
 local theme = "default/theme.lua"
-local terminal = "kgx"
+local terminal = "alacritty -o font.size=7"
 local editor = "subl"
+local bar_height = 24
 
 awful.spawn("xinput set-prop \"Logitech USB Trackball\" \"libinput Scroll Method Enabled\" 0, 0, 1")
 awful.spawn("xinput set-prop \"PIXA3854:00 093A:0274 Touchpad\" \"libinput Disable While Typing Enabled\" 0")
@@ -30,6 +31,7 @@ local laptopScreen =  "xrandr --output eDP-1  --auto --primary; xrandr --output 
 local desktopScreen = "xrandr --output DP-2-1 --auto --primary; xrandr --output eDP-1  --off"
 
 beautiful.init(gears.filesystem.get_themes_dir() .. theme)
+beautiful.font = "sans 10"
 beautiful.master_width_factor = 1 / 3
 
 local main_layout = {name = "fairh"}
@@ -182,7 +184,7 @@ awful.screen.connect_for_each_screen(function(s)
 			awful.button({}, 5, function () awful.client.focus.byidx(-1) end)
 		)
 	}
-	s.mywibox = awful.wibar({position = "top", screen = s})
+	s.mywibox = awful.wibar({position = "top", screen = s, height = bar_height})
 	s.mywibox:setup {
 		layout = wibox.layout.align.horizontal,
 		{
@@ -318,7 +320,7 @@ client.connect_signal("request::titlebars", function(c)
 		awful.button({}, 3, function() awful.mouse.client.resize(c) end)
 	)
 		
-	awful.titlebar(c) : setup {
+	awful.titlebar(c, {size = bar_height}) : setup {
 		layout = wibox.layout.align.horizontal,
 		{
 			layout = wibox.layout.fixed.horizontal,
