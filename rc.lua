@@ -24,7 +24,6 @@ local theme = "default/theme.lua"
 local terminal = "kgx"
 local editor = "subl"
 
-awful.spawn("xscreensaver")
 awful.spawn("xinput set-prop \"Logitech USB Trackball\" \"libinput Scroll Method Enabled\" 0, 0, 1")
 awful.spawn("xinput set-prop \"PIXA3854:00 093A:0274 Touchpad\" \"libinput Disable While Typing Enabled\" 0")
 local laptopScreen =  "xrandr --output eDP-1  --auto --primary; xrandr --output DP-2-1 --off"
@@ -260,7 +259,7 @@ local globalkeys = gears.table.join(
 		{description = "open a terminal", group = "launcher"}),
 	awful.key({"Mod4"}, "r", function () awful.screen.focused().mypromptbox:run() end,
 		{description = "run prompt", group = "launcher"}),
-	awful.key({"Mod4"}, "l", function () awful.spawn.with_shell("xscreensaver-command -lock") end,
+	awful.key({"Mod4"}, "l", function () awful.spawn.with_shell("xsecurelock") end,
 		{description = "start screensaver", group = "launcher"}),
 	
 	awful.key({"Mod4"}, "x", function () awful.tag.incnmaster(1) end,
