@@ -21,7 +21,7 @@ awesome.connect_signal("debug::error", function (err)
 end)
 
 local theme = "default/theme.lua"
-local terminal = "alacritty -o font.size=7"
+local terminal = "alacritty -o font.size=6.5"
 local editor = "subl"
 local bar_height = 24
 
