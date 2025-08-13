@@ -27,8 +27,8 @@ local bar_height = 24
 
 awful.spawn("xinput set-prop \"Logitech USB Trackball\" \"libinput Scroll Method Enabled\" 0, 0, 1")
 awful.spawn("xinput set-prop \"PIXA3854:00 093A:0274 Touchpad\" \"libinput Disable While Typing Enabled\" 0")
-local laptopScreen =  "xrandr --output eDP-1  --auto --primary; xrandr --output DP-2-1 --off"
-local desktopScreen = "xrandr --output DP-2-1 --auto --primary; xrandr --output eDP-1  --off"
+local laptopScreen =  "xrandr --output eDP-1 --mode 2256x1504 --primary --output DP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --off"
+local desktopScreen = "xrandr --output DP-1 --mode 3840x2160 --primary --output eDP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --off"
 
 beautiful.init(gears.filesystem.get_themes_dir() .. theme)
 beautiful.font = "sans 10"
