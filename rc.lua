@@ -22,6 +22,7 @@ end)
 
 local theme = "default/theme.lua"
 local terminal = "alacritty -o font.size=6.5"
+local chrome = "google-chrome"
 local editor = "subl"
 local bar_height = 24
 
@@ -195,8 +196,7 @@ awful.screen.connect_for_each_screen(function(s)
 				menu = awful.menu({
 					{"Hotkeys", function() hotkeys.show_help() end},
 					{"Awesome", editor .. " " .. awesome.conffile},
-					{"NixOS", editor .. " " .. "/etc/nixos/configuration.nix"},
-					{"Terminal", terminal},
+					{"NixOS", terminal .. " alacritty --command sudo " .. editor .. " /etc/nixos/configuration.nix"},
 					{"Restart", awesome.restart},
 					{"Quit", function() awesome.quit() end},
 				})
@@ -231,13 +231,6 @@ local globalkeys = gears.table.join(
 		{description = "swap with next client by index", group = "client"}),
 	awful.key({"Mod1", "Mod4", "Shift"}, "Tab", function () awful.client.swap.byidx(1) end,
 		{description = "swap with prev client by index", group = "client"}),
-	
-	awful.key({"Mod4"}, "u", awful.client.urgent.jumpto,
-		{description = "jump to urgent client", group = "client"}),
-	awful.key({"Mod4", "Control"}, "n", function ()
-			awful.client.restore():emit_signal("request::activate", "key.unminimize")
-		end,
-		{description = "restore minimized", group = "client"}),
 
 	awful.key({"Mod4"}, "Left", awful.tag.viewprev,
 		{description = "view prev tag", group = "tag"}),
@@ -261,6 +254,8 @@ local globalkeys = gears.table.join(
 		{description = "open a terminal", group = "launcher"}),
 	awful.key({"Mod4"}, "r", function () awful.screen.focused().mypromptbox:run() end,
 		{description = "run prompt", group = "launcher"}),
+	awful.key({"Mod4"}, "n", function () awful.spawn(chrome) end,
+		{description = "run chrome", group = "launcher"}),
 	awful.key({"Mod4"}, "l", function () awful.spawn.with_shell("xsecurelock") end,
 		{description = "start screensaver", group = "launcher"}),
 	
@@ -284,18 +279,8 @@ local globalkeys = gears.table.join(
 )
 
 local clientkeys = gears.table.join(
-	awful.key({"Mod4"}, "f", function (c) c.fullscreen = not c.fullscreen end,
-		{description = "toggle fullscreen", group = "client"}),
 	awful.key({"Mod4", "Control"}, "c", function (c) c:kill() end,
 		{description = "close", group = "client"}),
-	awful.key({"Mod4", "Control"}, "Return", function (c) c:swap(client.getmaster()) end,
-		{description = "move to master", group = "client"}),
-	awful.key({"Mod4"}, "t", function (c) c.ontop = not c.ontop end,
-		{description = "toggle keep on top", group = "client"}),
-	awful.key({"Mod4"}, "n", function (c) c.minimized = true end,
-		{description = "minimize", group = "client"}),
-	awful.key({"Mod4"}, "m", function (c) c.maximized = not c.maximized end,
-		{description = "maximize", group = "client"}),
 	
 	awful.key({"Mod4", "Control"}, "3", function (c) c.screen.selected_tag.master_width_factor = 1 / 3 end,
 		{description = "thirds", group = "layout"}),
